@@ -1,9 +1,9 @@
 # GameShop
 
-Names: Gulzar Fatima, Samuel Nii Owusu, Parjad Minooei
+## Names: Gulzar Fatima, Samuel Nii Owusu, Parjad Minooei
 
-Fully API CRUD operation implemented in the program using swagger.
-The Tables is also uploaded on Github.
+- Fully API CRUD operation implemented in the program using swagger.
+- The Tables is also uploaded on Github. Called Tables.jpg
 
-the new Updated Wireframe is uploaded on github as well plz have a look at it file name WIREFRAME.pdf
+- the new Updated Wireframe is uploaded on github as well plz have a look at it file name WIREFRAME.pdf
 
