@@ -1,18 +1,23 @@
 ﻿using GameShop.Models;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
 namespace GameShop.Data
 {
-    public class ApplicationDbContext : DbContext
+    public class ApplicationDbContext : IdentityDbContext<IdentityUser>
     {
-        public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options) { }
+        public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
+            : base(options)
+        {
+        }
 
+        // Your app's entities
         public DbSet<Game> Games { get; set; }
         public DbSet<Playlist> Playlists { get; set; }
         public DbSet<PlaylistGame> PlaylistGames { get; set; }
         public DbSet<Customer> Customers { get; set; }
         public DbSet<Sticker> Stickers { get; set; }
-
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
