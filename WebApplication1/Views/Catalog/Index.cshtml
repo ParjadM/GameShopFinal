@@ -1,0 +1,104 @@
+﻿@{
+    ViewData["Title"] = "Manage Catalog";
+}
+
+@section Styles {
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="~/css/catalog.css" />
+
+
+}
+
+<div class="container">
+    <div class="pageWrapper">
+
+        <header class="headerNav">
+            <div class="logo">GameShop - Admin</div>
+            <div class="navLinks">
+                <a href="#" class="active">Catalog</a>
+                <a href="#">Logout</a>
+            </div>
+        </header>
+
+        <main class="mainContent">
+            <h1 class="mainTitle">Manage Catalog</h1>
+
+            
+            <section class="catalogSection">
+                <div class="sectionHeader">
+                    <h2>Playlists</h2>
+                    <div class="actions">
+                        <button class="btn">ADD PLAYLIST</button>
+                    </div>
+                </div>
+                <div class="sectionContent">
+                    
+                    <div class="itemCard">
+                        <div class="itemHeader">
+                            <span class="itemTitle">Playlist 1</span>
+                            <div class="itemAction">
+                                <a href="#" class="deleteLink">Delete</a>
+                                <a href="#" class="updateLink">Update</a>
+                            </div>
+                        </div>
+                        <div class="itemBody">
+                            <p>Game 1</p>
+                            <p>Game 2</p>
+                        </div>
+                        
+                    </div>
+                </div>
+            </section>
+            <section class="catalogSection">
+                <div class="sectionHeader">
+                    <h2>Games</h2>
+                    <div class="actions">
+                        <button class="btn">ADD GAME</button>
+                    </div>
+                </div>
+                <div class="sectionContent">
+                    <div class="itemCard">
+                        <div class="itemHeader">
+                            <span class="itemTitle">Game 1</span>
+                            <div class="itemAction">
+                                <a href="#" class="deleteLink">Delete</a>
+                                <a href="#" class="updateLink">Update</a>
+                            </div>
+                        </div>
+                        <div class="itemBody">
+                            <p>Sticker 1</p>
+                            <p>Sticker 2</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section class="catalogSection">
+                <div class="sectionHeader">
+                    <h2>Stickers</h2>
+                    <div class="actions">
+                        <button class="btn">ADD STICKER</button>
+                    </div>
+                </div>
+                <div class="sectionContent">
+                    <div class="itemRow">
+                        <span class="itemTitle">Sticker 1</span>
+                        <div class="itemAction">
+                            <a href="#" class="deleteLink">Delete</a>
+                            <a href="#" class="updateLink">Update</a>
+                        </div>
+                    </div>
+                    <div class="itemRow">
+                        <span class="itemTitle">Sticker 2</span>
+                        <div class="itemAction">
+                            <a href="#" class="deleteLink">Delete</a>
+                            <a href="#" class="updateLink">Update</a>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </main>
+    </div>
+</div>
