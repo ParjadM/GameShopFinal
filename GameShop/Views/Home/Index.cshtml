@@ -1,8 +1,66 @@
 ﻿@{
-    ViewData["Title"] = "Home Page";
+    ViewData["Title"] = "GameShop Admin Dashboard";
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://learn.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
-</div>
+<header class="header">
+    <div class="header-content">
+        <h1 class="logo">GameShop - Admin</h1>
+        <nav class="nav">
+            <button id="catalogTab" class="nav-btn active" type="button">Catalog</button>
+            <button id="customersTab" class="nav-btn" type="button">Customers</button>
+            <a href="#" class="nav-link">Logout</a>
+        </nav>
+    </div>
+</header>
+
+<main class="main">
+    <div id="catalogSection" class="section active">
+        <div class="content-card">
+            <h2 class="section-title">Manage Catalog</h2>
+
+            <section class="subsection">
+                <div class="subsection-header">
+                    <h3>Playlists</h3>
+                    <div class="header-actions">
+                        <button class="btn-primary" onclick="openModal('playlistModal')">ADD PLAYLIST</button>
+                        <span class="more-icon">⋯</span>
+                    </div>
+                </div>
+                <div id="playlistsList" class="items-list">
+                    <!-- Playlists will be populated by JavaScript -->
+                </div>
+            </section>
+
+            <section class="subsection">
+                <div class="subsection-header">
+                    <h3>Games</h3>
+                    <div class="header-actions">
+                        <button class="btn-primary" onclick="openModal('gameModal')">ADD GAME</button>
+                        <span class="more-icon">⋯</span>
+                    </div>
+                </div>
+                <div id="gamesList" class="items-list">
+                    <!-- Games will be populated by JavaScript -->
+                </div>
+            </section>
+
+            <section class="subsection">
+                <div class="subsection-header">
+                    <h3>Stickers</h3>
+                    <div class="header-actions">
+                        <button class="btn-primary" onclick="openModal('stickerModal')">ADD STICKER</button>
+                        <span class="more-icon">⋯</span>
+                    </div>
+                </div>
+                <div id="stickersList" class="items-list">
+                    <!-- Stickers will be populated by JavaScript -->
+                </div>
+            </section>
+        </div>
+    </div>
+
+    <div id="customersSection" class="section" style="display:none;">
+        <!-- Empty for now -->
+    </div>
+</main>
+

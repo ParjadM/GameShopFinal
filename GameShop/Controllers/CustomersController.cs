@@ -4,9 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace GameShop.Controllers
 {
-    [ApiController]
-    [Route("api/[controller]")]
-    public class CustomersController : ControllerBase
+    public class CustomersController : Controller
     {
         private readonly ICustomerService _customerService;
 
@@ -15,74 +13,86 @@ namespace GameShop.Controllers
             _customerService = customerService;
         }
 
-        // GET: api/customers
-        [HttpGet]
-        public async Task<ActionResult<IEnumerable<CustomerDto>>> GetAll()
+        // GET: /Customers
+        public async Task<IActionResult> Index()
         {
             var customers = await _customerService.GetAllAsync();
-            return Ok(customers);
+            return View(customers);  // Pass list to view
         }
 
-        // GET: api/customers/{id}
-        [HttpGet("{id:int}")]
-        public async Task<ActionResult<CustomerDto>> GetById(int id)
+        // GET: /Customers/Details/5
+        public async Task<IActionResult> Details(int id)
         {
             var customer = await _customerService.GetByIdAsync(id);
             if (customer == null) return NotFound();
-            return Ok(customer);
+            return View(customer);  // Pass single customer to view
         }
 
-        // GET: api/customers/{id}/games
-        [HttpGet("{id:int}/games")]
-        public async Task<ActionResult<CustomerWithGamesDto>> GetWithGames(int id)
+        // GET: /Customers/Create
+        public IActionResult Create()
         {
-            var customer = await _customerService.GetWithGamesByIdAsync(id);
-            if (customer == null) return NotFound();
-            return Ok(customer);
+            return View();
         }
 
-        // POST: api/customers
+        // POST: /Customers/Create
         [HttpPost]
-        public async Task<ActionResult<CustomerDto>> Create(CustomerCreateDto dto)
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Create(CustomerCreateDto dto)
         {
+            if (!ModelState.IsValid)
+                return View(dto);
+
             var created = await _customerService.CreateAsync(dto);
-            return CreatedAtAction(nameof(GetById), new { id = created.Id }, created);
+            return RedirectToAction(nameof(Index));
         }
 
-        // PUT: api/customers/{id}
-        [HttpPut("{id:int}")]
-        public async Task<IActionResult> Update(int id, CustomerUpdateDto dto)
+        // GET: /Customers/Edit/5
+        public async Task<IActionResult> Edit(int id)
         {
+            var customer = await _customerService.GetByIdAsync(id);
+            if (customer == null) return NotFound();
+
+            // Map to update DTO if needed, or just pass the model
+            var updateDto = new CustomerUpdateDto
+            {
+               
+            };
+
+            return View(updateDto);
+        }
+
+        // POST: /Customers/Edit/5
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Edit(int id, CustomerUpdateDto dto)
+        {
+            if (!ModelState.IsValid)
+                return View(dto);
+
             var updated = await _customerService.UpdateAsync(id, dto);
             if (!updated) return NotFound();
-            return NoContent();
+
+            return RedirectToAction(nameof(Index));
         }
 
-        // DELETE: api/customers/{id}
-        [HttpDelete("{id:int}")]
+        // GET: /Customers/Delete/5
         public async Task<IActionResult> Delete(int id)
+        {
+            var customer = await _customerService.GetByIdAsync(id);
+            if (customer == null) return NotFound();
+
+            return View(customer);
+        }
+
+        // POST: /Customers/Delete/5
+        [HttpPost, ActionName("Delete")]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> DeleteConfirmed(int id)
         {
             var deleted = await _customerService.DeleteAsync(id);
             if (!deleted) return NotFound();
-            return NoContent();
-        }
 
-        // POST /api/customers/{customerId}/games/{gameId}
-        [HttpPost("{customerId}/games/{gameId}")]
-        public async Task<IActionResult> AssignGameToCustomer(int customerId, int gameId)
-        {
-            var success = await _customerService.AssignGameToCustomerAsync(customerId, gameId);
-            if (!success) return NotFound();
-            return NoContent();
-        }
-
-        // DELETE /api/customers/{customerId}/games/{gameId}
-        [HttpDelete("{customerId}/games/{gameId}")]
-        public async Task<IActionResult> RemoveGameFromCustomer(int customerId, int gameId)
-        {
-            var success = await _customerService.RemoveGameFromCustomerAsync(customerId, gameId);
-            if (!success) return NotFound();
-            return NoContent();
+            return RedirectToAction(nameof(Index));
         }
 
     }
