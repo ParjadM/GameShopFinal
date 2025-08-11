@@ -5,21 +5,26 @@
 }
 
 body {
-    font-family: 'Inter', sans-serif;
-    background-color: #f3f4f6; 
-    color: #1f2937; 
+    font-family: "Segoe UI", Arial, sans-serif;
+    background-color: #f3f4f6;
+    color: #1f2937;
 }
+
+
 
 a {
     text-decoration: none;
     color: #3b82f6; 
 }
 
+
+
 a:hover {
     color: #1d4ed8;
 }
 
-/* Main Layout */
+
+
 .container {
     max-width: 96rem; 
     margin-left: auto;
@@ -27,13 +32,14 @@ a:hover {
     padding: 2rem;
 }
 
-.pageWrapper {
+ .pageWrapper {
     background-color: #ffffff;
     border: 1px solid #d1d5db;
     border-radius: 0.5rem;
 }
 
-/* Header Navigation */
+
+
 .headerNav {
     display: flex;
     align-items: center;
@@ -46,6 +52,8 @@ a:hover {
     font-weight: 700;
 }
 
+
+
 .headerNav .navLinks {
     display: flex;
     align-items: center;
@@ -56,9 +64,12 @@ a:hover {
     color: #6b7280; 
 }
 
+
+
 .headerNav .navLinks a:hover {
     color: #1f2937; 
 }
+
 
 .headerNav .navLinks .active {
     color: #3b82f6; 
@@ -67,7 +78,8 @@ a:hover {
     padding-bottom: 0.25rem;
 }
 
-/* Main Content Area */
+
+
 .mainContent {
     padding: 1.5rem;
 }
@@ -78,7 +90,7 @@ a:hover {
     margin-bottom: 1.5rem;
 }
 
-/* Catalog */
+
 .catalogSection {
     margin-bottom: 2rem;
     background-color: #ffffff;
@@ -100,11 +112,16 @@ a:hover {
     font-weight: 600;
 }
 
+
+
 .sectionHeader .actions {
     display: flex;
     align-items: center;
     gap: 1rem;
 }
+
+
+
 
 .btn {
     background-color: #000000;
@@ -115,6 +132,7 @@ a:hover {
     font-weight: 500;
     border: none;
     cursor: pointer;
+
 }
 
 .btn:hover {
@@ -134,11 +152,12 @@ a:hover {
     gap: 1rem;
 }
 
-/* Item Card */
+
 .itemCard {
     border: 1px solid #e5e7eb;
     border-radius: 0.5rem;
 }
+
 
 .itemHeader {
     display: flex;
@@ -150,13 +169,16 @@ a:hover {
     border-top-right-radius: 0.5rem;
 }
 
+
 .itemHeader.collapsed {
     border-radius: 0.5rem;
 }
 
+
 .itemHeader .itemTitle {
      font-weight: 500;
 }
+
 
 .itemHeader .itemAction {
     display: flex;
@@ -165,12 +187,13 @@ a:hover {
     font-size: 0.875rem;
 }
 
-.itemHeader .itemAction .deleteLink {
+ .itemHeader .itemAction .deleteLink {
     color: #ef4444; 
+
     font-weight: 500;
 }
 
-.itemHeader .itemAction .deleteLink:hover {
+ .itemHeader .itemAction .deleteLink:hover {
     color: #dc2626; 
 }
 
@@ -178,10 +201,12 @@ a:hover {
     font-weight: 500;
 }
 
+
 .itemHeader .icon {
    height: 1.25rem;
    width: 1.25rem;
    color: #6b7280;
+
 }
 
 .itemBody {
@@ -190,6 +215,7 @@ a:hover {
     flex-direction: column;
     gap: 0.75rem;
     color: #374151; 
+
 }
 
 .itemFooter {
@@ -197,15 +223,19 @@ a:hover {
     justify-content: flex-end;
     padding: 0.5rem;
     border-top: 1px solid #e5e7eb;
+
 }
 
 .itemFooter .icon {
     height: 1.25rem;
     width: 1.25rem;
     color: #3b82f6; 
+
 }
 
-/* Sticker Row */
+
+
+
 .itemRow {
     display: flex;
     align-items: center;
@@ -215,19 +245,25 @@ a:hover {
     border-radius: 0.5rem;
 }
 
-.itemRow .itemTitle {
+
+
+ .itemRow .itemTitle {
    font-weight: 500;
 }
 
-.itemRow .itemAction {
+
+
+ .itemRow .itemAction {
     display: flex;
    align-items: center;
   gap: 1rem;
   font-size: 0.875rem;
 }
 
+
 .itemRow .itemAction .deleteLink {
        color: #ef4444;
+
     font-weight: 500;
 }
 

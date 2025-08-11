@@ -1,0 +1,82 @@
+﻿@{
+    Layout = null;
+}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Update Sticker -GameShop Admin</title>
+    <link rel="stylesheet" href="~/css/UpdateSticker.css" />
+</head>
+<body>
+    <header class="header">
+        <div class="headerContainer">
+            <a href="#" class="headerBrand">GameShop - Admin</a>
+            <nav class="headerNav">
+                <ul>
+                    <li><a href="#">Catalog</a></li>
+                    <li><a href="#">Logout</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <div class="mainContainer">
+        <div class="breadcrumb" style="margin-bottom: 1.5rem;">
+            <a href="#"> Manage Catalog</a>
+            <span>Update Sticker</span>
+        </div>
+
+        <h2 style="margin-bottom: 1rem;">Update Sticker</h2>
+        <hr />
+
+        <form method="post" action="#">
+
+            <div class="formWrapper">
+                <div class="formFields">
+                    <div class="formGroup">
+                        <label for="game">Select Game</label>
+                        <select id="game" name="game">
+                            <option>-- Select a Game --</option>
+                            <option selected>Diablo IV</option>
+                            <option>FIFA</option>
+                            <option>NBA</option>
+                        </select>
+                    </div>
+
+                    <div class="formGroup">
+                        <label for="stickerName">Sticker Name</label>
+                        <input type="text" id="stickerName" name="stickerName" placeholder="Lilith" />
+                    </div>
+                    <div class="formGroup">
+                        <label for="description">Sticker Description</label>
+                        <textarea id="description" name="description" rows="3">ABC Sticker Description</textarea>
+                    </div>
+
+                    <div class="formGroup">
+                        <label for="price">Sticker Price</label>
+                        <input type="text" id="price" name="price" placeholder="2.05" />
+                    </div>
+                </div>
+
+                <div class="imageUploader">
+                    <label for="newImageFile">Sticker Image</label>
+                    <div class="imagePreviewBox"></div>
+                    <input type="file" id="newImageFile" name="newImageFile" />
+                </div>
+
+            </div>
+
+            <hr />
+
+            <div class="formActions">
+                <button type="submit" class="btn btnSave">SAVE</button>
+                <a href="#" class="btn btnCancel">CANCEL</a>
+            </div>
+
+        </form>
+    </div>
+
+</body>
+</html>

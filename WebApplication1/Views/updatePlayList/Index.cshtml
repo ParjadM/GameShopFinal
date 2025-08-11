@@ -1,0 +1,81 @@
+﻿@{
+    Layout = null;
+}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Update Playlist - GameShop Admin</title>
+    <link rel="stylesheet" href="~/css/UpdatePlayList.css" />
+</head>
+<body>
+    <header class="header">
+        <div class="headerContainer">
+            <a href="#" class="headerBrand">GameShop - Admin</a>
+            <nav class="headerNav">
+                <ul>
+                    <li><a href="#">Inventory</a></li>
+                    <li><a href="#">Catalog</a></li>
+                    <li><a href="#">Logout</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <div class="mainContainer">
+        <div class="breadcrumb" style="margin-bottom: 1.5rem;">
+            <a href="#">Manage Catalog</a>
+            <span>Update Playlist</span>
+        </div>
+
+        <h2 style="margin-bottom: 1rem;">Update Playlist</h2>
+        <hr />
+
+        <form method="post" action="#">
+
+            <div class="formWrapper">
+                <div class="formFields">
+
+                    <div class="formGroup">
+                        <label for="gameName">Select Game</label>
+                        <select id="gameName" name="gameName">
+                            <option>Game Name</option>
+                            <option>Diablo IV</option>
+                            <option>FIFA</option>
+                        </select>
+                    </div>
+                    <div class="formGroup">
+                        <label for="playlistName">Playlist Name</label>
+                        <input type="text" id="playlistName" name="playlistName" placeholder="Playlist Name" />
+                    </div>
+
+                    <div class="formGroup">
+                        <label for="playlistDescription">Playlist Description</label>
+                        <textarea id="playlistDescription" name="playlistDescription" placeholder="Playlist Description"></textarea>
+                    </div>
+
+                    <div class="formActions">
+                        <button type="submit" class="btn btnSave">SAVE</button>
+                        <a href="#" class="btn btnCancel">CANCEL</a>
+                    </div>
+
+                </div>
+
+                <div class="multiSelectContainer">
+                    <label for="countries">Japan-Yen, Pakistan-Rupees</label>
+                    <select id="countries" name="countries" multiple>
+                        <option>United States of America-Dollars</option>
+                        <option>Britain (United Kingdom)-Pounds</option>
+                        <option>Australia-Dollars</option>
+                        <option selected>Japan-Yen</option>
+                        <option>India-Rupees</option>
+                        <option selected>Pakistan-Rupees</option>
+                    </select>
+                </div>
+            </div>
+        </form>
+    </div>
+
+</body>
+</html>

@@ -1,0 +1,77 @@
+﻿@{
+    Layout = null;
+}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Update Game - GameShop Admin</title>
+    <link rel="stylesheet" href="~/css/UpdateGames.css" />
+</head>
+<body>
+    <header class="header">
+        <div class="headerContainer">
+            <a href="#" class="headerBrand">GameShop - Admin</a>
+            <nav class="headerNav">
+                <ul>
+                    <li><a href="#">Inventory</a></li>
+                    <li><a href="#">Catalog</a></li>
+                    <li><a href="#">Logout</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <div class="mainContainer">
+        <div class="breadcrumb" style="margin-bottom: 1.5rem;">
+            <a href="#">&larr; Manage Catalog</a>
+            <span> / Update Game</span>
+        </div>
+
+        <h2 style="margin-bottom: 1rem;">Update Game</h2>
+        <hr />
+
+        <form method="post" action="#">
+
+            <div class="formWrapper">
+                <div class="formFields">
+                    <div class="formGroup">
+                        <label for="gameName">Game Name</label>
+                        <input type="text" id="gameName" name="gameName" placeholder="ABC Sticker Name" />
+                    </div>
+                    <div class="formGroup">
+                        <label for="genre">Genre</label>
+                        <input type="text" id="genre" name="genre" placeholder="Action" />
+                    </div>
+                    <div class="formGroup">
+                        <label for="releaseDate">Release Date</label>
+                        <input type="text" id="releaseDate" name="releaseDate" placeholder="Data Selector" />
+                    </div>
+                    <div class="formGroup">
+                        <label for="title">Title</label>
+                        <input type="text" id="title" name="title" placeholder="Game Title" />
+                    </div>
+                    <div class="formGroup">
+                        <label for="price">Price</label>
+                        <input type="text" id="price" name="price" placeholder="2.05" />
+                    </div>
+                </div>
+
+                <div class="imageUploader">
+                    <label for="gameImage">Game Image</label>
+                    <div class="imagePreviewBox"></div>
+                    <button type="button" class="uploadButton">Upload Image</button>
+                </div>
+            </div>
+
+            <hr />
+            <div class="formActions">
+                <button type="submit" class="btn btnSave">SAVE</button>
+                <a href="#" class="btn btnCancel">CANCEL</a>
+            </div>
+        </form>
+    </div>
+
+</body>
+</html>
