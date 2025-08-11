@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Add Sticker - GameShop Admin</title>
+  <link rel="stylesheet" href="~/css/add.css" />
+</head>
+<body>
+  
+ <!-- Reusable Admin Header -->
+ <header class="header">
+  <div class="header-left">
+    <strong>GameShop - Admin</strong>
+  </div>
+  <nav class="header-right">
+    <a href="catalog.html">Catalog</a>
+    <a href="logout.html">Logout</a>
+  </nav>
+</header>
+
+  <!-- Main Content -->
+  <main class="content">
+    <p class="breadcrumb">&larr; Manage Catalog / Add Product / Add Sticker</p>
+    <h1>Add Sticker</h1>
+
+    <form class="form">
+      <!-- Left Form Section -->
+      <div class="form-left">
+        <label for="game">Select Game</label>
+        <select id="game" name="game">
+          <option selected>Diablo IV</option>
+          <option>Overwatch 2</option>
+          <option>Starcraft</option>
+          <!-- Add more games -->
+        </select>
+
+        <label for="sticker-name">Sticker Name</label>
+        <input type="text" id="sticker-name" placeholder="Lilith" />
+
+        <label for="sticker-desc">Sticker Description</label>
+        <input type="text" id="sticker-desc" placeholder="ABC Sticker Description" />
+
+        <label for="sticker-price">Sticker Price</label>
+        <input type="number" id="sticker-price" step="0.01" placeholder="2.05" />
+      </div>
+
+      <!-- Right Form Section -->
+      <div class="form-right">
+        <label>Sticker Image</label>
+        <div class="image-preview"></div>
+        <button type="button" class="upload-btn">Upload Image</button>
+      </div>
+
+      <!-- Buttons -->
+      <div class="form-actions">
+        <button type="submit" class="add-btn">ADD</button>
+        <button type="button" class="cancel-btn">CANCEL</button>
+      </div>
+    </form>
+  </main>
+</body>
+</html>
