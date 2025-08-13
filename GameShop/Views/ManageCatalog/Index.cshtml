@@ -1,0 +1,61 @@
+﻿@model IEnumerable<GameShop.DTO.GameDto>
+
+@{
+    ViewData["Title"] = "Manage Catalog - Games";
+}
+
+@section Styles {
+    <link rel="stylesheet" href="~/css/catalog.css" />
+}
+
+<div class="container">
+    <div class="pageWrapper">
+
+        <header class="headerNav">
+            <div class="logo">GameShop - Admin</div>
+            <div class="navLinks">
+                <a href="#" class="active">Catalog</a>
+                <a href="#">Logout</a>
+            </div>
+        </header>
+
+        <main class="mainContent">
+            <h1 class="mainTitle">Manage Catalog</h1>
+
+            <section class="catalogSection">
+                <div class="sectionHeader">
+                    <h2>Games</h2>
+                    <div class="actions">
+                        <button class="btn" id="addGameBtn">ADD GAME</button>
+                    </div>
+                </div>
+
+                <div class="sectionContent" id="gamesList">
+                    @if (Model != null && Model.Any())
+                    {
+                        foreach (var game in Model)
+                        {
+                            <div class="itemCard">
+                                <div class="itemHeader">
+                                    <span class="itemTitle">@game.Title</span>
+                                    <div class="itemAction">
+                                        <a href="#" class="deleteLink" data-id="@game.GameId">Delete</a>
+                                        <a href="#" class="updateLink" data-id="@game.GameId">Update</a>
+                                    </div>
+                                </div>
+                                <div class="itemBody">
+                                    <p>Genre: @game.Genre</p>
+                                </div>
+                            </div>
+                        }
+                    }
+                    else
+                    {
+                        <p>No games found.</p>
+                    }
+                </div>
+            </section>
+
+        </main>
+    </div>
+</div>
