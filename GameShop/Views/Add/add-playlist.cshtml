@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Add Playlist - GameShop Admin</title>
+
+  <!-- Chosen CSS -->
+  <link href="https://cdn.rawgit.com/harvesthq/chosen/gh-pages/chosen.min.css" rel="stylesheet"/>
+
+  <!-- Your custom styles -->
+  <link rel="stylesheet" href="~/css/add.css" />
+</head>
+<body>
+
+  <!-- Admin Header -->
+  <header class="header">
+    <div class="header-left">
+      <strong>GameShop - Admin</strong>
+    </div>
+    <nav class="header-right">
+      <a href="#">Catalog</a>
+      <a href="#">Logout</a>
+    </nav>
+  </header>
+
+  <!-- Page Content -->
+  <main class="content">
+    <p class="breadcrumb">&larr; Manage Catalog / Add Product / Add Playlist</p>
+    <h1>Add Playlist</h1>
+
+    <form class="form">
+      <!-- Left Form Section -->
+      <div class="form-left">
+        <label for="game-select">Select Game</label>
+        <select data-placeholder="Select games..." multiple class="chosen-select" id="game-select" name="games[]">
+          <option>Diablo IV</option>
+          <option>Overwatch 2</option>
+          <option>Starcraft</option>
+          <option>Hearthstone</option>
+          <option>World of Warcraft</option>
+        </select>
+
+        <label for="playlist-name">Playlist Name</label>
+        <input type="text" id="playlist-name" placeholder="Playlist Name" />
+
+        <label for="playlist-desc">Playlist Description</label>
+        <input type="text" id="playlist-desc" placeholder="Playlist Description" />
+      </div>
+
+      <!-- Optional Right Section -->
+      <div class="form-right"></div>
+
+      <!-- Form Buttons -->
+      <div class="form-actions">
+        <button type="submit" class="add-btn">ADD</button>
+        <button type="button" class="cancel-btn">CANCEL</button>
+      </div>
+    </form>
+  </main>
+
+  <!-- jQuery + Chosen JS -->
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+  <script src="https://cdn.rawgit.com/harvesthq/chosen/gh-pages/chosen.jquery.min.js"></script>
+  <script>
+    $(".chosen-select").chosen({
+      no_results_text: "Oops, nothing found!"
+    });
+  </script>
+
+</body>
+</html>

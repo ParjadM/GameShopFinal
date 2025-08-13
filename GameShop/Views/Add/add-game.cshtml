@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Add Game - GameShop Admin</title>
+  <link rel="stylesheet" href="~/css/add.css" />
+</head>
+<body>
+
+  <!-- Admin Header -->
+  <header class="header">
+    <div class="header-left">
+      <strong>GameShop - Admin</strong>
+    </div>
+    <nav class="header-right">
+      <a href="#">Catalog</a>
+      <a href="#">Logout</a>
+    </nav>
+  </header>
+
+  <!-- Page Content -->
+  <main class="content">
+    <p class="breadcrumb">&larr; Manage Catalog / Add Product / Add Game</p>
+    <h1>Add Game</h1>
+
+    <form class="form">
+      <!-- Left Form Section -->
+      <div class="form-left">
+        <label for="game-name">Game Name</label>
+        <input type="text" id="game-name" placeholder="ABC Sticker Name" />
+
+        <label for="genre">Genre</label>
+        <input type="text" id="genre" placeholder="Action" />
+
+        <label for="release-date">Release Date</label>
+        <input type="text" id="release-date" placeholder="Date Selector" />
+
+        <label for="title">Title</label>
+        <input type="text" id="title" placeholder="Game Title" />
+
+        <label for="price">Price</label>
+        <input type="number" id="price" step="0.01" placeholder="2.05" />
+      </div>
+
+      <!-- Right Form Section -->
+      <div class="form-right">
+        <label>Game Image</label>
+        <div class="image-preview"></div>
+        <button type="button" class="upload-btn">Upload Image</button>
+      </div>
+
+      <!-- Form Buttons -->
+      <div class="form-actions">
+        <button type="submit" class="add-btn">ADD</button>
+        <button type="button" class="cancel-btn">CANCEL</button>
+      </div>
+    </form>
+  </main>
+
+</body>
+</html>
