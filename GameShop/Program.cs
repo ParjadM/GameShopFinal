@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc.Authorization;
 using GameShop.Models;
 
+
 var builder = WebApplication.CreateBuilder(args);
 
 var connectionString = builder.Configuration.GetConnectionString("DefaultConnection")
@@ -19,6 +20,7 @@ builder.Services.AddDefaultIdentity<IdentityUser>(options =>
     options.SignIn.RequireConfirmedAccount = false;
 })
 .AddEntityFrameworkStores<ApplicationDbContext>();
+
 
 // Add Controllers with Views and apply global authorization policy
 builder.Services.AddControllersWithViews(options =>
@@ -58,6 +60,9 @@ if (app.Environment.IsDevelopment())
         c.RoutePrefix = "swagger";
     });
 }
+
+
+
 
 app.UseHttpsRedirection();
 

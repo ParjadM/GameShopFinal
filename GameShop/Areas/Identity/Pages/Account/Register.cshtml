@@ -4,64 +4,112 @@
     ViewData["Title"] = "Register";
 }
 
-<h1>@ViewData["Title"]</h1>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>@ViewData["Title"] - GameShop</title>
+    <link rel="stylesheet" href="~/css/modern-auth-styles.css" />
+</head>
+<body>
+    <div class="auth-container">
+        <!-- Background Pattern -->
+        <div class="bg-pattern"></div>
 
-<div class="row">
-    <div class="col-md-4">
-        <form id="registerForm" asp-route-returnUrl="@Model.ReturnUrl" method="post">
-            <h2>Create a new account.</h2>
-            <hr />
-            <div asp-validation-summary="ModelOnly" class="text-danger" role="alert"></div>
-            <div class="form-floating mb-3">
-                <input asp-for="Input.Email" class="form-control" autocomplete="username" aria-required="true" placeholder="name@example.com" />
-                <label asp-for="Input.Email">Email</label>
-                <span asp-validation-for="Input.Email" class="text-danger"></span>
+        <!-- Auth Card -->
+        <div class="auth-card">
+            <!-- Header -->
+            <div class="auth-header">
+                <h1 class="brand-logo">GameShop</h1>
+                <h2 class="auth-title">Create Account</h2>
+                <p class="auth-subtitle">Join GameShop and start your gaming journey</p>
             </div>
-            <div class="form-floating mb-3">
-                <input asp-for="Input.Password" class="form-control" autocomplete="new-password" aria-required="true" placeholder="password" />
-                <label asp-for="Input.Password">Password</label>
-                <span asp-validation-for="Input.Password" class="text-danger"></span>
-            </div>
-            <div class="form-floating mb-3">
-                <input asp-for="Input.ConfirmPassword" class="form-control" autocomplete="new-password" aria-required="true" placeholder="password" />
-                <label asp-for="Input.ConfirmPassword">Confirm Password</label>
-                <span asp-validation-for="Input.ConfirmPassword" class="text-danger"></span>
-            </div>
-            <button id="registerSubmit" type="submit" class="w-100 btn btn-lg btn-primary">Register</button>
-        </form>
-    </div>
-    <div class="col-md-6 col-md-offset-2">
-        <section>
-            <h3>Use another service to register.</h3>
-            <hr />
-            @{
-                if ((Model.ExternalLogins?.Count ?? 0) == 0)
-                {
-                    <div>
-                        <p>
-                            There are no external authentication services configured. See this <a href="https://go.microsoft.com/fwlink/?LinkID=532715">article
-                            about setting up this ASP.NET application to support logging in via external services</a>.
-                        </p>
+
+            <!-- Register Form -->
+            <form id="registerForm" method="post" asp-route-returnUrl="@Model.ReturnUrl" class="auth-form">
+                <div asp-validation-summary="All" class="text-danger mb-3" role="alert"></div>
+
+                <!-- Email -->
+                <div class="form-group">
+                    <label asp-for="Input.Email" class="form-label"></label>
+                    <div class="input-container">
+                        <input asp-for="Input.Email" class="form-input" placeholder="Enter your email" autocomplete="username" />
+                        <span class="input-icon">📧</span>
                     </div>
-                }
-                else
-                {
-                    <form id="external-account" asp-page="./ExternalLogin" asp-route-returnUrl="@Model.ReturnUrl" method="post" class="form-horizontal">
-                        <div>
-                            <p>
-                                @foreach (var provider in Model.ExternalLogins!)
-                                {
-                                    <button type="submit" class="btn btn-primary" name="provider" value="@provider.Name" title="Log in using your @provider.DisplayName account">@provider.DisplayName</button>
-                                }
-                            </p>
-                        </div>
-                    </form>
-                }
-            }
-        </section>
-    </div>
-</div>
+                    <span asp-validation-for="Input.Email" class="error-message"></span>
+                </div>
 
-@section Scripts {
+                <!-- Password -->
+                <div class="form-group">
+                    <label asp-for="Input.Password" class="form-label"></label>
+                    <div class="input-container">
+                        <input asp-for="Input.Password" class="form-input" placeholder="Create a password" autocomplete="new-password" />
+                        <button type="button" class="password-toggle" onclick="togglePassword('Input_Password')">
+                            <span id="Input_PasswordToggleIcon">👁️</span>
+                        </button>
+                    </div>
+                    <span asp-validation-for="Input.Password" class="error-message"></span>
+                </div>
+
+                <!-- Confirm Password -->
+                <div class="form-group">
+                    <label asp-for="Input.ConfirmPassword" class="form-label"></label>
+                    <div class="input-container">
+                        <input asp-for="Input.ConfirmPassword" class="form-input" placeholder="Confirm your password" autocomplete="new-password" />
+                        <button type="button" class="password-toggle" onclick="togglePassword('Input_ConfirmPassword')">
+                            <span id="Input_ConfirmPasswordToggleIcon">👁️</span>
+                        </button>
+                    </div>
+                    <span asp-validation-for="Input.ConfirmPassword" class="error-message"></span>
+                </div>
+
+                <!-- Terms -->
+                <div class="form-group">
+                    <label class="checkbox-container">
+                        <input asp-for="Input.AgreeToTerms" type="checkbox" />
+                        <span class="checkmark"></span>
+                        <span class="checkbox-text">
+                            I agree to the
+                            <a href="#" class="terms-link">Terms of Service</a> and
+                            <a href="#" class="terms-link">Privacy Policy</a>
+                        </span>
+                    </label>
+                    <span asp-validation-for="Input.AgreeToTerms" class="error-message"></span>
+                </div>
+
+                <!-- Submit -->
+                <button type="submit" class="auth-button primary" id="registerButton">
+                    <span class="button-text">Create Account</span>
+                    <div class="loading-spinner" style="display:none;"></div>
+                </button>
+
+                <!-- Divider -->
+                <div class="divider">
+                    <span class="divider-text">or sign up with</span>
+                </div>
+
+                <!-- External Sign Up Buttons -->
+                <div class="social-buttons">
+                    <form id="external-account" asp-page="./ExternalLogin" asp-route-returnUrl="@Model.ReturnUrl" method="post" class="form-horizontal">
+                        <button type="submit" class="social-button" name="provider" value="Google" title="Sign up using your Google account">
+                            <span class="social-icon">🔗</span> Google
+                        </button>
+                        <button type="submit" class="social-button" name="provider" value="Microsoft" title="Sign up using your Microsoft account">
+                            <span class="social-icon">📱</span> Microsoft
+                        </button>
+                    </form>
+                </div>
+
+                <!-- Footer -->
+                <div class="auth-footer">
+                    <p>Already have an account? <a asp-page="./Login" class="auth-link">Sign in</a></p>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script src="~/js/modern-auth-script.js"></script>
     <partial name="_ValidationScriptsPartial" />
-}
+</body>
+</html>
