@@ -9,5 +9,6 @@
         public string ImageUrl { get; set; } = null!;
 
         public string? GameTitle { get; set; }
+        public int GameId { get; set; }
     }
 }

@@ -71,7 +71,8 @@ namespace GameShop.Services
                 Description = s.Description,
                 Price = s.Price,
                 ImageUrl = s.ImageUrl,
-                GameTitle = s.Game?.Title
+                GameTitle = s.Game?.Title,
+                GameId = s.GameId
             };
         }
 

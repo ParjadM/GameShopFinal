@@ -23,6 +23,9 @@ namespace GameShop.Data
         {
             base.OnModelCreating(modelBuilder);
 
+            // Existing configurations
+            modelBuilder.HasAnnotation("Relational:HistoryTable", "__efmigrationshistory");
+
             modelBuilder.Entity<PlaylistGame>()
                 .HasKey(pg => new { pg.PlaylistId, pg.GameId });
 
@@ -47,6 +50,17 @@ namespace GameShop.Data
                 .WithMany(g => g.Stickers)
                 .HasForeignKey(s => s.GameId)
                 .OnDelete(DeleteBehavior.Cascade);
+
+            // Add precision for decimal properties
+            modelBuilder.Entity<Game>()
+                .Property(g => g.Price)
+                .HasPrecision(18, 2);
+
+            modelBuilder.Entity<Sticker>()
+                .Property(s => s.Price)
+                .HasPrecision(18, 2);
         }
+
+
     }
 }

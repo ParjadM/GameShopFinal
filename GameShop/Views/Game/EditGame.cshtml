@@ -1,0 +1,70 @@
+﻿@model GameShop.Dtos.GameCreateUpdateDto
+
+@{
+    ViewData["Title"] = "Edit Game - GameShop Admin";
+}
+
+<link rel="stylesheet" href="~/css/addgame.css" />
+
+<header class="header">
+    <div class="header-left">
+        <strong>GameShop - Admin</strong>
+    </div>
+    <nav class="header-right">
+        <a href="/ManageCatalog">Catalog</a>
+        <a href="/Account/Logout">Logout</a>
+    </nav>
+</header>
+
+<main class="content">
+    <p class="breadcrumb">&larr; Manage Catalog / Edit Game</p>
+    <h1>Edit Game</h1>
+
+    <form asp-action="EditGame" asp-controller="Game" method="post" enctype="multipart/form-data" class="form">
+        @Html.AntiForgeryToken()
+
+        <div class="form-left">
+            <input type="hidden" asp-for="GameId" />
+            <input type="hidden" asp-for="ImagePath" />
+
+            <label asp-for="Title"></label>
+            <input asp-for="Title" class="form-control" />
+            <span asp-validation-for="Title" class="text-danger"></span>
+
+            <label asp-for="Genre"></label>
+            <input asp-for="Genre" class="form-control" />
+            <span asp-validation-for="Genre" class="text-danger"></span>
+
+            <label asp-for="ReleaseDate"></label>
+            <input asp-for="ReleaseDate" type="date" class="form-control" value="@Model.ReleaseDate.ToString("yyyy-MM-dd")" />
+            <span asp-validation-for="ReleaseDate" class="text-danger"></span>
+
+            <label asp-for="Price"></label>
+            <input asp-for="Price" type="number" step="0.01" class="form-control" />
+            <span asp-validation-for="Price" class="text-danger"></span>
+        </div>
+
+        <div class="form-right">
+            <label>Game Image</label>
+            <input type="file" name="imageFile" />
+            @if (!string.IsNullOrEmpty(Model.ImagePath))
+            {
+                <p>Current image:</p>
+                <img src="@Model.ImagePath" alt="Game Image" class="current-image" />
+            }
+            else
+            {
+                <p>No image available</p>
+            }
+        </div>
+
+        <div class="form-actions">
+            <button type="submit" class="add-btn">SAVE</button>
+            <a href="/ManageCatalog" class="cancel-btn">CANCEL</a>
+        </div>
+    </form>
+</main>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace GameShop.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20250808082659_InitialMigration")]
-    partial class InitialMigration
+    [Migration("20250814141923_InitialCreate")]
+    partial class InitialCreate
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -21,6 +21,7 @@ namespace GameShop.Migrations
 #pragma warning disable 612, 618
             modelBuilder
                 .HasAnnotation("ProductVersion", "8.0.16")
+                .HasAnnotation("Relational:HistoryTable", "__efmigrationshistory")
                 .HasAnnotation("Relational:MaxIdentifierLength", 64);
 
             MySqlModelBuilderExtensions.AutoIncrementColumns(modelBuilder);
@@ -70,8 +71,12 @@ namespace GameShop.Migrations
                         .IsRequired()
                         .HasColumnType("longtext");
 
+                    b.Property<string>("ImagePath")
+                        .HasColumnType("longtext");
+
                     b.Property<decimal>("Price")
-                        .HasColumnType("decimal(65,30)");
+                        .HasPrecision(18, 2)
+                        .HasColumnType("decimal(18,2)");
 
                     b.Property<DateTime>("ReleaseDate")
                         .HasColumnType("datetime(6)");
@@ -147,7 +152,8 @@ namespace GameShop.Migrations
                         .HasColumnType("varchar(100)");
 
                     b.Property<decimal>("Price")
-                        .HasColumnType("decimal(65,30)");
+                        .HasPrecision(18, 2)
+                        .HasColumnType("decimal(18,2)");
 
                     b.HasKey("StickerId");
 

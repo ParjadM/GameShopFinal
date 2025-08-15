@@ -6,23 +6,23 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc.Authorization;
 using GameShop.Models;
 
-
 var builder = WebApplication.CreateBuilder(args);
 
-var connectionString = builder.Configuration.GetConnectionString("DefaultConnection")
-    ?? throw new InvalidOperationException("Connection string 'DefaultConnection' not found.");
+// Use MySQL connection
+var connectionString = builder.Configuration.GetConnectionString("AppDbContextConnection")
+    ?? throw new InvalidOperationException("Connection string 'AppDbContextConnection' not found.");
 
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseMySql(connectionString, ServerVersion.AutoDetect(connectionString)));
 
+// Identity setup
 builder.Services.AddDefaultIdentity<IdentityUser>(options =>
 {
     options.SignIn.RequireConfirmedAccount = false;
 })
 .AddEntityFrameworkStores<ApplicationDbContext>();
 
-
-// Add Controllers with Views and apply global authorization policy
+// Add Controllers with Views and global authorization policy
 builder.Services.AddControllersWithViews(options =>
 {
     var policy = new AuthorizationPolicyBuilder()
@@ -32,7 +32,7 @@ builder.Services.AddControllersWithViews(options =>
     options.Filters.Add(new AuthorizeFilter(policy));
 });
 
-// Add Razor Pages and allow anonymous access to Identity UI pages (login, register, etc.)
+// Add Razor Pages and allow anonymous access to Identity UI pages
 builder.Services.AddRazorPages(options =>
 {
     options.Conventions.AllowAnonymousToAreaFolder("Identity", "/Account");
@@ -51,6 +51,7 @@ builder.Services.AddSwaggerGen();
 
 var app = builder.Build();
 
+// Swagger setup for development
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
@@ -60,9 +61,6 @@ if (app.Environment.IsDevelopment())
         c.RoutePrefix = "swagger";
     });
 }
-
-
-
 
 app.UseHttpsRedirection();
 
@@ -84,7 +82,7 @@ app.UseAuthorization();
 
 app.MapControllerRoute(
     name: "default",
-    pattern: "{controller=Home}/{action=Index}/{id?}");
+    pattern: "{controller=ManageCatalog}/{action=Index}/{id?}");
 
 app.MapRazorPages();
 

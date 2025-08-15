@@ -27,7 +27,6 @@
                     </div>
                 </div>
                 <div id="playlistsList" class="items-list">
-                    <!-- Playlists will be populated by JavaScript -->
                 </div>
             </section>
 
@@ -35,12 +34,11 @@
                 <div class="subsection-header">
                     <h3>Games</h3>
                     <div class="header-actions">
-                        <button class="btn-primary" onclick="openModal('gameModal')">ADD GAME</button>
+                        <a class="btn-primary" asp-controller="Game" asp-action="AddGame">ADD GAME</a>
                         <span class="more-icon">⋯</span>
                     </div>
                 </div>
                 <div id="gamesList" class="items-list">
-                    <!-- Games will be populated by JavaScript -->
                 </div>
             </section>
 
@@ -53,7 +51,6 @@
                     </div>
                 </div>
                 <div id="stickersList" class="items-list">
-                    <!-- Stickers will be populated by JavaScript -->
                 </div>
             </section>
         </div>
