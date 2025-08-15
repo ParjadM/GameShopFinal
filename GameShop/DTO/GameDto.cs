@@ -14,5 +14,6 @@ namespace GameShop.DTO
         public string? ImagePath { get; set; }
 
         public List<StickerDto> Stickers { get; set; } = new();
+        public string? ImageUrl { get; internal set; }
     }
 }
