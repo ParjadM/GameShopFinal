@@ -23,3 +23,4 @@
 
 # Instructions
 * please sign up an account and then you can access the dashboard
+* Please use main branch to work with the project
