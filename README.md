@@ -17,3 +17,6 @@
 
 ### submitted by each member 
 * all members contributed and participated
+
+### fully tested
+* error handling were done to make sure everything works smoothly
