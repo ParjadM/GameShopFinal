@@ -1,0 +1,415 @@
+﻿@model GameShop.ViewModels.ManageCatalogViewModel
+
+@{
+    ViewData["Title"] = "Manage Catalog - Games";
+}
+
+@section Styles {
+    <link rel="stylesheet" href="~/css/catalog.css" />
+    <style>
+        /* Modal overlay */
+        .modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.5);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+        }
+
+        .modal-content {
+            background-color: #fff;
+            padding: 25px;
+            border-radius: 10px;
+            width: 400px;
+            max-width: 90%;
+            text-align: center;
+            position: relative;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+        }
+
+        .modal .close {
+            position: absolute;
+            top: 10px;
+            right: 15px;
+            cursor: pointer;
+            font-size: 22px;
+            font-weight: bold;
+        }
+
+        .btn-danger {
+            background-color: #dc3545;
+            color: #fff;
+            border: none;
+            padding: 8px 15px;
+            margin: 5px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .btn-danger:hover {
+            background-color: #c82333;
+        }
+
+        .btn-cancel {
+            background-color: #6c757d;
+            color: #fff;
+            border: none;
+            padding: 8px 15px;
+            margin: 5px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .btn-cancel:hover {
+            background-color: #5a6268;
+        }
+    </style>
+}
+
+<div class="container">
+    <div class="pageWrapper">
+        <header class="headerNav">
+            <div class="logo">GameShop - Admin</div>
+            <div class="navLinks">
+                <a href="#" class="active">Catalog</a>
+                <a href="#">Logout</a>
+            </div>
+        </header>
+
+        <main class="mainContent">
+            <h1 class="mainTitle">Manage Catalog</h1>
+
+            <section class="catalogSection">
+                <div class="sectionHeader">
+                    <h2>Games</h2>
+                    <div class="actions">
+                        <a class="btn-primary" asp-controller="Game" asp-action="AddGame">ADD GAME</a>
+                    </div>
+                </div>
+
+                <div class="sectionContent" id="gamesList">
+                    @if (Model.Games != null && Model.Games.Any())
+                    {
+                        foreach (var game in Model.Games)
+                        {
+                            <div class="itemCard">
+                                <div class="itemHeader">
+                                    <span class="itemTitle">@game.Title</span>
+                                    <div class="itemAction">
+                                        <button type="button" class="deleteLink" data-id="@game.GameId">Delete</button>
+                                        <a asp-controller="Game" asp-action="EditGame" asp-route-id="@game.GameId" class="updateLink">Update</a>
+                                    </div>
+                                </div>
+                                <div class="itemBody">
+                                    <p>Genre: @game.Genre</p>
+                                    @if (game.Stickers != null && game.Stickers.Any())
+                                    {
+                                        <p>Stickers:</p>
+                                        <ul>
+                                            @foreach (var sticker in game.Stickers)
+                                            {
+                                                <li>@sticker.Name</li>
+                                            }
+                                        </ul>
+                                    }
+                                    else
+                                    {
+                                        <p>No stickers associated.</p>
+                                    }
+                                </div>
+                            </div>
+                        }
+                    }
+                    else
+                    {
+                        <p>No games found.</p>
+                    }
+                </div>
+            </section>
+
+
+            <!-- Stickers Section -->
+            <section class="catalogSection">
+                <div class="sectionHeader">
+                    <h2>Stickers</h2>
+                    <div class="actions">
+                        <a class="btn-primary" asp-controller="Sticker" asp-action="Add">ADD STICKER</a>
+                    </div>
+                </div>
+
+                <div class="sectionContent" id="stickersList">
+                    @if (Model.Stickers != null && Model.Stickers.Any())
+                    {
+                        foreach (var sticker in Model.Stickers)
+                        {
+                            <div class="itemCard">
+                                <div class="itemHeader">
+                                    <span class="itemTitle">@sticker.Name</span>
+                                    <div class="itemAction">
+                                        <button type="button" class="deleteStickerLink" data-id="@sticker.StickerId">Delete</button>
+                                        <a asp-controller="Sticker" asp-action="Edit" asp-route-id="@sticker.StickerId" class="updateLink">Update</a>
+                                    </div>
+                                </div>
+                            </div>
+                        }
+                    }
+                    else
+                    {
+                        <p>No stickers found.</p>
+                    }
+                </div>
+            </section>
+
+            <!-- Playlists Section -->
+            <section class="catalogSection">
+                <div class="sectionHeader">
+                    <h2>Playlists</h2>
+                    <div class="actions">
+                        <a class="btn-primary" asp-controller="Playlist" asp-action="Add">ADD PLAYLIST</a>
+                    </div>
+                </div>
+
+                <div class="sectionContent" id="playlistsList">
+                    @if (Model.Playlists != null && Model.Playlists.Any())
+                    {
+                        foreach (var playlist in Model.Playlists)
+                        {
+                            <div class="itemCard">
+                                <div class="itemHeader">
+                                    <span class="itemTitle">@playlist.Name</span>
+                                    <div class="itemAction">
+                                        <button type="button" class="deletePlaylistLink" data-id="@playlist.PlayListId">Delete</button>
+                                        <a class="editPlaylistLink btn-primary"
+                                           href="@Url.Action("Edit", "Playlist", new { id = playlist.PlayListId })">
+                                            Edit
+                                        </a>
+                                        <button type="button" class="addGameToPlaylistLink" data-id="@playlist.PlayListId">Add Game</button>
+                                    </div>
+                                </div>
+                                <div class="itemBody">
+                                    <p>@playlist.Description</p>
+                                    @if (playlist.Games != null && playlist.Games.Any())
+                                    {
+                                        <p>Games:</p>
+                                        <ul>
+                                            @foreach (var game in playlist.Games)
+                                            {
+                                                <li>
+                                                    @game.Title
+                                                    <button type="button" class="removeGameFromPlaylist" data-playlist="@playlist.PlayListId" data-game="@game.GameId">Remove</button>
+                                                </li>
+                                            }
+                                        </ul>
+                                    }
+                                    else
+                                    {
+                                        <p>No games assigned.</p>
+                                    }
+                                </div>
+                            </div>
+                        }
+                    }
+                    else
+                    {
+                        <p>No playlists found.</p>
+                    }
+                </div>
+            </section>
+
+
+
+
+            <!-- Delete Confirmation Modal -->
+            <div id="deleteModal" class="modal">
+                <div class="modal-content">
+                    <span class="close">&times;</span>
+                    <h3>Confirm Delete</h3>
+                    <p>Are you sure you want to delete <strong id="itemTitle"></strong>?</p>
+                    <form id="deleteForm" method="post">
+                        @Html.AntiForgeryToken()
+                        <input type="hidden" name="id" id="deleteId" />
+                        <div>
+                            <button type="submit" class="btn-danger">Delete</button>
+                            <button type="button" class="btn-cancel" id="cancelDelete">Cancel</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+
+            <!-- Add Game to Playlist Modal -->
+            <div id="addGameModal" class="modal">
+                <div class="modal-content">
+                    <span class="close">&times;</span>
+                    <h3>Add Game to Playlist</h3>
+                    <form id="addGameForm">
+                        <input type="hidden" id="playlistIdInput" />
+                        <select id="gameSelect">
+                            <!-- dynamically populate unassigned games -->
+                        </select>
+                        <div>
+                            <button type="submit" class="btn-primary">Add</button>
+                            <button type="button" class="btn-cancel" id="cancelAddGame">Cancel</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+
+
+        </main>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            // -------------------- //
+            // Generic Delete Modal //
+            // -------------------- //
+            const deleteModal = document.getElementById("deleteModal");
+            const itemTitleElem = document.getElementById("itemTitle");
+            const deleteForm = document.getElementById("deleteForm");
+            const deleteIdInput = document.getElementById("deleteId");
+            const cancelDeleteBtn = document.getElementById("cancelDelete");
+            const closeDeleteBtn = deleteModal.querySelector(".close");
+
+            function openDeleteModal(id, title, controller) {
+                itemTitleElem.textContent = title;
+                deleteIdInput.value = id;
+                deleteForm.action = `/${controller}/Delete`;
+                deleteModal.style.display = "flex";
+            }
+
+            // Games Delete
+            document.querySelectorAll(".deleteLink").forEach(btn => {
+                btn.addEventListener("click", function () {
+                    const gameId = this.dataset.id;
+                    const title = this.closest(".itemCard").querySelector(".itemTitle").textContent;
+                    openDeleteModal(gameId, title, "Game");
+                });
+            });
+
+            // Stickers Delete
+            document.querySelectorAll(".deleteStickerLink").forEach(btn => {
+                btn.addEventListener("click", function () {
+                    const stickerId = this.dataset.id;
+                    const title = this.closest(".itemCard").querySelector(".itemTitle").textContent;
+                    openDeleteModal(stickerId, title, "Sticker");
+                });
+            });
+
+            // Playlists Delete
+            document.querySelectorAll(".deletePlaylistLink").forEach(btn => {
+                btn.addEventListener("click", function () {
+                    const playlistId = this.dataset.id;
+                    const title = this.closest(".itemCard").querySelector(".itemTitle").textContent;
+                    openDeleteModal(playlistId, title, "Playlist");
+                });
+            });
+
+            // Close delete modal
+            cancelDeleteBtn.addEventListener("click", () => deleteModal.style.display = "none");
+            closeDeleteBtn.addEventListener("click", () => deleteModal.style.display = "none");
+            window.addEventListener("click", e => { if (e.target === deleteModal) deleteModal.style.display = "none"; });
+
+            // ----------------------------- //
+            // Add Game to Playlist Modal    //
+            // ----------------------------- //
+            const addGameModal = document.getElementById("addGameModal");
+            const playlistIdInput = document.getElementById("playlistIdInput");
+            const gameSelect = document.getElementById("gameSelect");
+            const cancelAddGameBtn = document.getElementById("cancelAddGame");
+
+            // Serialize server-side model into JS variables
+            const allGames = @Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(Model.Games));
+            const allPlaylists = @Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(Model.Playlists));
+
+            document.querySelectorAll(".addGameToPlaylistLink").forEach(btn => {
+                btn.addEventListener("click", function () {
+                    const playlistId = parseInt(this.dataset.id);
+                    playlistIdInput.value = playlistId;
+
+                    // Clear previous options
+                    gameSelect.innerHTML = "";
+
+                    // Find playlist and assigned game IDs
+                    const playlist = allPlaylists.find(p => p.PlayListId === playlistId);
+                    const assignedGameIds = playlist.Games.map(g => g.GameId);
+
+                    // Populate unassigned games
+                    allGames.forEach(game => {
+                        if (!assignedGameIds.includes(game.GameId)) {
+                            const option = document.createElement("option");
+                            option.value = game.GameId;
+                            option.text = game.Title;
+                            gameSelect.add(option);
+                        }
+                    });
+
+                    addGameModal.style.display = "flex";
+                });
+            });
+
+            // Close add game modal
+            cancelAddGameBtn.addEventListener("click", () => addGameModal.style.display = "none");
+            addGameModal.querySelector(".close").addEventListener("click", () => addGameModal.style.display = "none");
+            window.addEventListener("click", e => { if (e.target === addGameModal) addGameModal.style.display = "none"; });
+
+            // Submit add game via AJAX
+            document.getElementById("addGameForm").addEventListener("submit", async function (e) {
+                e.preventDefault();
+                const playlistId = parseInt(playlistIdInput.value);
+                const gameId = parseInt(gameSelect.value);
+
+                if (!gameId) return alert("Select a game first.");
+
+                const response = await fetch(`/Playlist/AddGame`, {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json",
+                        "RequestVerificationToken": document.querySelector('input[name="__RequestVerificationToken"]').value
+                    },
+                    body: JSON.stringify({ playlistId, gameId })
+                });
+
+                if (response.ok) {
+                    location.reload();
+                } else {
+                    alert("Failed to add game to playlist.");
+                }
+            });
+
+            // Remove game from playlist
+            document.querySelectorAll(".removeGameFromPlaylist").forEach(btn => {
+                btn.addEventListener("click", async function () {
+                    const playlistId = parseInt(this.dataset.playlist);
+                    const gameId = parseInt(this.dataset.game);
+
+                    if (!confirm("Are you sure you want to remove this game from the playlist?")) return;
+
+                    const response = await fetch(`/Playlist/RemoveGame`, {
+                        method: "POST",
+                        headers: {
+                            "Content-Type": "application/json",
+                            "RequestVerificationToken": document.querySelector('input[name="__RequestVerificationToken"]').value
+                        },
+                        body: JSON.stringify({ playlistId, gameId })
+                    });
+
+                    if (response.ok) {
+                        location.reload();
+                    } else {
+                        alert("Failed to remove game from playlist.");
+                    }
+                });
+            });
+
+        });
+    </script>
+}

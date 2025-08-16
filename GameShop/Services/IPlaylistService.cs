@@ -12,8 +12,11 @@ namespace GameShop.Services
         Task<bool> UpdatePlaylistAsync(int playlistId, PlaylistCreateUpdateDto playlistDto);
         Task<bool> DeletePlaylistAsync(int playlistId);
 
+
         // Operations for the bridge table
         Task<bool> AddGameToPlaylistAsync(int playlistId, int gameId);
         Task<bool> RemoveGameFromPlaylistAsync(int playlistId, int gameId);
+
+        Task<IEnumerable<PlaylistDto>> GetAllPlaylistsWithGamesAsync();
     }
 }

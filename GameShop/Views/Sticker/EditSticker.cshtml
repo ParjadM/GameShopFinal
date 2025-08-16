@@ -1,0 +1,76 @@
+﻿@model GameShop.DTO.StickerCreateUpdateDto
+
+@{
+    ViewData["Title"] = "Edit Sticker - GameShop Admin";
+}
+
+<link rel="stylesheet" href="~/css/addgame.css" />
+
+<header class="header">
+    <div class="header-left">
+        <strong>GameShop - Admin</strong>
+    </div>
+    <nav class="header-right">
+        <a asp-controller="ManageCatalog" asp-action="Index">Catalog</a>
+        <a asp-controller="Account" asp-action="Logout">Logout</a>
+    </nav>
+</header>
+
+<main class="content">
+    <p class="breadcrumb">&larr; Manage Catalog / Edit Sticker</p>
+    <h1>Edit Sticker</h1>
+
+    <form asp-action="Edit" asp-controller="Sticker" method="post" enctype="multipart/form-data" class="form">
+        @Html.AntiForgeryToken()
+
+        <!-- Left Form Section -->
+        <div class="form-left">
+
+            <label asp-for="GameId">Select Game</label>
+            <select asp-for="GameId" asp-items="ViewBag.Games" class="form-control">
+                <option value="">-- Select Game --</option>
+            </select>
+            <span asp-validation-for="GameId" class="text-danger"></span>
+
+            <label asp-for="Name">Sticker Name</label>
+            <input asp-for="Name" class="form-control" />
+            <span asp-validation-for="Name" class="text-danger"></span>
+
+            <label asp-for="Description">Sticker Description</label>
+            <input asp-for="Description" class="form-control" />
+            <span asp-validation-for="Description" class="text-danger"></span>
+
+            <label asp-for="Price">Sticker Price</label>
+            <input asp-for="Price" class="form-control" type="number" step="0.01" />
+            <span asp-validation-for="Price" class="text-danger"></span>
+        </div>
+
+        <!-- Right Form Section -->
+        <div class="form-right">
+            @if (!string.IsNullOrEmpty(Model.ImageUrl))
+            {
+                <p>Current Image:</p>
+                <img src="@Model.ImageUrl" alt="Sticker Image" style="max-width:150px; margin-bottom:10px;" />
+            }
+
+            <label>Upload New Image (optional)</label>
+            <input type="file" name="imageFile" />
+            <span class="text-danger">
+                @if (ViewData.ModelState["imageFile"]?.Errors.Count > 0)
+                {
+                    @ViewData.ModelState["imageFile"].Errors[0].ErrorMessage
+                }
+            </span>
+        </div>
+
+        <!-- Buttons -->
+        <div class="form-actions">
+            <button type="submit" class="add-btn">UPDATE</button>
+            <button type="button" class="cancel-btn" onclick="window.location='@Url.Action("Index","ManageCatalog")'">CANCEL</button>
+        </div>
+    </form>
+</main>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

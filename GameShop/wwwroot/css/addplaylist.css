@@ -1,0 +1,90 @@
+﻿/* Reset & Base Styles */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body, html {
+    font-family: Arial, sans-serif;
+    background-color: #fff;
+    color: #222;
+}
+
+/* ---------------------- */
+/* Page Header            */
+/* ---------------------- */
+h1 {
+    margin-bottom: 24px;
+    font-size: 1.8rem;
+}
+
+/* ---------------------- */
+/* Form Layout            */
+/* ---------------------- */
+form {
+    max-width: 500px;
+}
+
+    form div {
+        margin-bottom: 16px;
+    }
+
+    form label {
+        display: block;
+        margin-bottom: 6px;
+        font-weight: 500;
+    }
+
+    form input {
+        width: 100%;
+        padding: 10px;
+        font-size: 1rem;
+        border-radius: 4px;
+        border: 1px solid #ccc;
+    }
+
+    /* ---------------------- */
+    /* Form Buttons           */
+    /* ---------------------- */
+    form div:last-child {
+        display: flex;
+        gap: 10px; /* space between buttons */
+        margin-top: 20px;
+    }
+
+    form button[type="submit"],
+    form a {
+        padding: 12px 24px;
+        font-size: 1rem;
+        font-weight: bold;
+        border-radius: 6px;
+        border: 2px solid #333;
+        cursor: pointer;
+        text-decoration: none;
+        display: inline-block;
+    }
+
+    /* Submit Button */
+    form button[type="submit"] {
+        background-color: #111;
+        color: #fff;
+        border-color: #111;
+    }
+
+        form button[type="submit"]:hover {
+            background-color: #333;
+            border-color: #333;
+        }
+
+    /* Cancel Link */
+    form a {
+        background-color: #fff;
+        color: #111;
+        border-color: #333;
+        text-align: center;
+    }
+
+        form a:hover {
+            background-color: #f0f0f0;
+        }

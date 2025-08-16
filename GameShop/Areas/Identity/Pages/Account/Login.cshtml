@@ -1,0 +1,106 @@
+﻿@page
+@model LoginModel
+
+@{
+    ViewData["Title"] = "Log in";
+}
+
+<div class="auth-container">
+    <div class="auth-card">
+        <!-- Header -->
+        <div class="auth-header">
+            <h1 class="brand-logo">GameShop</h1>
+            <h2 class="auth-title">Welcome Back</h2>
+            <p class="auth-subtitle">Sign in to your account to continue</p>
+        </div>
+
+        <!-- Login Form -->
+        <form id="loginForm" class="auth-form" method="post" asp-route-returnUrl="@Model.ReturnUrl">
+            <div asp-validation-summary="ModelOnly" class="error-message" role="alert"></div>
+
+            <div class="form-group">
+                <label asp-for="Input.Email" class="form-label"></label>
+                <div class="input-container">
+                    <input asp-for="Input.Email"
+                           class="form-input"
+                           placeholder="Enter your email"
+                           autocomplete="username"
+                           required />
+                    <span class="input-icon">📧</span>
+                </div>
+                <span asp-validation-for="Input.Email" class="error-message"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="Input.Password" class="form-label"></label>
+                <div class="input-container">
+                    <input asp-for="Input.Password"
+                           class="form-input"
+                           placeholder="Enter your password"
+                           autocomplete="current-password"
+                           required
+                           type="password"
+                           id="passwordInput" />
+                    <button type="button" class="password-toggle" onclick="togglePassword('passwordInput')">
+                        <span id="passwordToggleIcon">👁️</span>
+                    </button>
+                </div>
+                <span asp-validation-for="Input.Password" class="error-message"></span>
+            </div>
+
+            <div class="form-options">
+                <label class="checkbox-container">
+                    <input asp-for="Input.RememberMe" type="checkbox" />
+                    <span class="checkmark"></span>
+                    @Html.DisplayNameFor(m => m.Input.RememberMe)
+                </label>
+                <a asp-page="./ForgotPassword" class="forgot-link">Forgot Password?</a>
+            </div>
+
+            <button type="submit" class="auth-button primary" id="loginButton">
+                <span class="button-text">Sign In</span>
+                <div class="loading-spinner" style="display: none;"></div>
+            </button>
+
+            <div class="divider">
+                <span class="divider-text">or continue with</span>
+            </div>
+
+          
+            <div class="social-buttons">
+                <form id="external-account" asp-page="./ExternalLogin" asp-route-returnUrl="@Model.ReturnUrl" method="post" class="form-horizontal">
+                    <button type="submit" class="social-button" name="provider" value="Google" title="Log in using your Google account">
+                        <span class="social-icon">🔗</span> Google
+                    </button>
+                    <button type="submit" class="social-button" name="provider" value="Microsoft" title="Log in using your Microsoft account">
+                        <span class="social-icon">📱</span> Microsoft
+                    </button>
+                </form>
+            </div>
+
+
+            <div class="auth-footer">
+                <p>Don't have an account? <a asp-page="./Register" class="auth-link">Sign up</a></p>
+            </div>
+        </form>
+    </div>
+
+    <div class="bg-pattern"></div>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+    <script>
+        function togglePassword(id) {
+            const input = document.getElementById(id);
+            const icon = document.getElementById('passwordToggleIcon');
+            if (input.type === "password") {
+                input.type = "text";
+                icon.textContent = "🙈";
+            } else {
+                input.type = "password";
+                icon.textContent = "👁️";
+            }
+        }
+    </script>
+}

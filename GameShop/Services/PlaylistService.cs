@@ -27,7 +27,7 @@ public class PlaylistService : IPlaylistService
 
         return new PlaylistDto
         {
-            PlayListId = playlist.PlayListId,
+            PlayListId = playlist.PlaylistId,
             Name = playlist.Name,
             Description = playlist.Description
         };
@@ -38,10 +38,10 @@ public class PlaylistService : IPlaylistService
         var playlist = await _context.Playlists
             .Include(p => p.PlaylistGames) 
             .ThenInclude(pg => pg.Game)   
-            .Where(p => p.PlayListId == playlistId)
+            .Where(p => p.PlaylistId == playlistId)
             .Select(p => new PlaylistDto 
             {
-                PlayListId = p.PlayListId,
+                PlayListId = p.PlaylistId,
                 Name = p.Name,
                 Description = p.Description,
                 Games = p.PlaylistGames.Select(pg => new GameDto
@@ -73,7 +73,7 @@ public class PlaylistService : IPlaylistService
 
     public async Task<bool> AddGameToPlaylistAsync(int playlistId, int gameId)
     {
-        var playlistExists = await _context.Playlists.AnyAsync(p => p.PlayListId == playlistId);
+        var playlistExists = await _context.Playlists.AnyAsync(p => p.PlaylistId == playlistId);
         var gameExists = await _context.Games.AnyAsync(g => g.GameId == gameId);
 
         if (!playlistExists || !gameExists)
@@ -120,7 +120,7 @@ public class PlaylistService : IPlaylistService
         var playlists = await _context.Playlists
             .Select(p => new PlaylistDto
             {
-                PlayListId = p.PlayListId,
+                PlayListId = p.PlaylistId,
                 Name = p.Name,
                 Description = p.Description,
                 Games = new List<GameDto>()
@@ -146,4 +146,27 @@ public class PlaylistService : IPlaylistService
 
         return true;
     }
+
+    public async Task<IEnumerable<PlaylistDto>> GetAllPlaylistsWithGamesAsync()
+{
+    var playlists = await _context.Playlists
+        .Include(p => p.PlaylistGames)
+            .ThenInclude(pg => pg.Game)
+        .Select(p => new PlaylistDto
+        {
+            PlayListId = p.PlaylistId,
+            Name = p.Name,
+            Description = p.Description,
+            Games = p.PlaylistGames.Select(pg => new GameDto
+            {
+                GameId = pg.Game.GameId,
+                Title = pg.Game.Title,
+                Genre = pg.Game.Genre
+            }).ToList()
+        })
+        .ToListAsync();
+
+    return playlists;
+}
+
 }

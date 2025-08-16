@@ -11,12 +11,14 @@ namespace GameShop.Services
         private readonly ApplicationDbContext _context;
         private readonly IPasswordHasher<Customer> _passwordHasher;
 
+        // Constructor - set up database and password hasher
         public CustomerService(ApplicationDbContext context, IPasswordHasher<Customer> passwordHasher)
         {
             _context = context;
             _passwordHasher = passwordHasher;
         }
 
+        // Get all customers as a list of DTOs
         public async Task<List<CustomerDto>> GetAllAsync()
         {
             return await _context.Customers
@@ -29,6 +31,7 @@ namespace GameShop.Services
                 }).ToListAsync();
         }
 
+        // Get a customer by ID
         public async Task<CustomerDto?> GetByIdAsync(int id)
         {
             var customer = await _context.Customers.FindAsync(id);
@@ -42,6 +45,8 @@ namespace GameShop.Services
                 DateJoined = customer.DateJoined
             };
         }
+
+        // Get a customer and their games by ID
 
         public async Task<CustomerWithGamesDto?> GetWithGamesByIdAsync(int id)
         {
@@ -63,6 +68,7 @@ namespace GameShop.Services
                 }).FirstOrDefaultAsync();
         }
 
+        // Create a new customer
         public async Task<CustomerDto> CreateAsync(CustomerCreateDto dto)
         {
             var customer = new Customer
@@ -71,7 +77,7 @@ namespace GameShop.Services
                 Email = dto.Email,
                 DateJoined = dto.DateJoined
             };
-
+            // Hash and store password
             customer.Password = _passwordHasher.HashPassword(customer, dto.Password);
 
             _context.Customers.Add(customer);
@@ -86,6 +92,7 @@ namespace GameShop.Services
             };
         }
 
+        // Update an existing customer
         public async Task<bool> UpdateAsync(int id, CustomerUpdateDto dto)
         {
             var customer = await _context.Customers.FindAsync(id);
@@ -94,6 +101,7 @@ namespace GameShop.Services
             customer.UserName = dto.UserName;
             customer.Email = dto.Email;
 
+            // Update password if provided
             if (!string.IsNullOrEmpty(dto.Password))
             {
                 customer.Password = _passwordHasher.HashPassword(customer, dto.Password);
@@ -102,7 +110,8 @@ namespace GameShop.Services
             await _context.SaveChangesAsync();
             return true;
         }
-
+        
+        // Delete a customer
         public async Task<bool> DeleteAsync(int id)
         {
             var customer = await _context.Customers.FindAsync(id);
@@ -113,6 +122,7 @@ namespace GameShop.Services
             return true;
         }
 
+        // Assign a game to a customer
         public async Task<bool> AssignGameToCustomerAsync(int customerId, int gameId)
         {
             var customer = await _context.Customers.FindAsync(customerId);
@@ -120,13 +130,13 @@ namespace GameShop.Services
 
             if (customer == null || game == null) return false;
 
-            // Assign game to customer
             game.CustomerId = customerId;
 
             await _context.SaveChangesAsync();
             return true;
         }
-
+        
+        // Remove a game from a customer
         public async Task<bool> RemoveGameFromCustomerAsync(int customerId, int gameId)
         {
             var game = await _context.Games

@@ -5,7 +5,7 @@
 namespace GameShop.Migrations
 {
     /// <inheritdoc />
-    public partial class MakeCustomerIdNullable : Migration
+    public partial class RenamePlayListIdToPlaylistId : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)

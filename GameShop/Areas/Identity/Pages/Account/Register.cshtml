@@ -1,0 +1,115 @@
+﻿@page
+@model RegisterModel
+@{
+    ViewData["Title"] = "Register";
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>@ViewData["Title"] - GameShop</title>
+    <link rel="stylesheet" href="~/css/modern-auth-styles.css" />
+</head>
+<body>
+    <div class="auth-container">
+        <!-- Background Pattern -->
+        <div class="bg-pattern"></div>
+
+        <!-- Auth Card -->
+        <div class="auth-card">
+            <!-- Header -->
+            <div class="auth-header">
+                <h1 class="brand-logo">GameShop</h1>
+                <h2 class="auth-title">Create Account</h2>
+                <p class="auth-subtitle">Join GameShop and start your gaming journey</p>
+            </div>
+
+            <!-- Register Form -->
+            <form id="registerForm" method="post" asp-route-returnUrl="@Model.ReturnUrl" class="auth-form">
+                <div asp-validation-summary="All" class="text-danger mb-3" role="alert"></div>
+
+                <!-- Email -->
+                <div class="form-group">
+                    <label asp-for="Input.Email" class="form-label"></label>
+                    <div class="input-container">
+                        <input asp-for="Input.Email" class="form-input" placeholder="Enter your email" autocomplete="username" />
+                        <span class="input-icon">📧</span>
+                    </div>
+                    <span asp-validation-for="Input.Email" class="error-message"></span>
+                </div>
+
+                <!-- Password -->
+                <div class="form-group">
+                    <label asp-for="Input.Password" class="form-label"></label>
+                    <div class="input-container">
+                        <input asp-for="Input.Password" class="form-input" placeholder="Create a password" autocomplete="new-password" />
+                        <button type="button" class="password-toggle" onclick="togglePassword('Input_Password')">
+                            <span id="Input_PasswordToggleIcon">👁️</span>
+                        </button>
+                    </div>
+                    <span asp-validation-for="Input.Password" class="error-message"></span>
+                </div>
+
+                <!-- Confirm Password -->
+                <div class="form-group">
+                    <label asp-for="Input.ConfirmPassword" class="form-label"></label>
+                    <div class="input-container">
+                        <input asp-for="Input.ConfirmPassword" class="form-input" placeholder="Confirm your password" autocomplete="new-password" />
+                        <button type="button" class="password-toggle" onclick="togglePassword('Input_ConfirmPassword')">
+                            <span id="Input_ConfirmPasswordToggleIcon">👁️</span>
+                        </button>
+                    </div>
+                    <span asp-validation-for="Input.ConfirmPassword" class="error-message"></span>
+                </div>
+
+                <!-- Terms -->
+                <div class="form-group">
+                    <label class="checkbox-container">
+                        <input asp-for="Input.AgreeToTerms" type="checkbox" />
+                        <span class="checkmark"></span>
+                        <span class="checkbox-text">
+                            I agree to the
+                            <a href="#" class="terms-link">Terms of Service</a> and
+                            <a href="#" class="terms-link">Privacy Policy</a>
+                        </span>
+                    </label>
+                    <span asp-validation-for="Input.AgreeToTerms" class="error-message"></span>
+                </div>
+
+                <!-- Submit -->
+                <button type="submit" class="auth-button primary" id="registerButton">
+                    <span class="button-text">Create Account</span>
+                    <div class="loading-spinner" style="display:none;"></div>
+                </button>
+
+                <!-- Divider -->
+                <div class="divider">
+                    <span class="divider-text">or sign up with</span>
+                </div>
+
+                <!-- External Sign Up Buttons -->
+                <div class="social-buttons">
+                    <form id="external-account" asp-page="./ExternalLogin" asp-route-returnUrl="@Model.ReturnUrl" method="post" class="form-horizontal">
+                        <button type="submit" class="social-button" name="provider" value="Google" title="Sign up using your Google account">
+                            <span class="social-icon">🔗</span> Google
+                        </button>
+                        <button type="submit" class="social-button" name="provider" value="Microsoft" title="Sign up using your Microsoft account">
+                            <span class="social-icon">📱</span> Microsoft
+                        </button>
+                    </form>
+                </div>
+
+                <!-- Footer -->
+                <div class="auth-footer">
+                    <p>Already have an account? <a asp-page="./Login" class="auth-link">Sign in</a></p>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script src="~/js/modern-auth-script.js"></script>
+    <partial name="_ValidationScriptsPartial" />
+</body>
+</html>
