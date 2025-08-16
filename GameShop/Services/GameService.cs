@@ -6,6 +6,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace GameShop.Services
 {
+    // Constructor - set up database context
     public class GameService : IGameService
     {
         private readonly ApplicationDbContext _context;
@@ -15,6 +16,7 @@ namespace GameShop.Services
             _context = context;
         }
 
+        // Create a new game
         public async Task<GameDto> CreateGameAsync(GameCreateUpdateDto gameDto)
         {
             var game = new Game
@@ -23,7 +25,7 @@ namespace GameShop.Services
                 Genre = gameDto.Genre,
                 Price = gameDto.Price,
                 ReleaseDate = gameDto.ReleaseDate,
-                ImagePath = gameDto.ImagePath 
+                ImagePath = gameDto.ImagePath
             };
 
             _context.Games.Add(game);
@@ -34,10 +36,11 @@ namespace GameShop.Services
                 GameId = game.GameId,
                 Title = game.Title,
                 Genre = game.Genre,
-                ImagePath = game.ImagePath 
+                ImagePath = game.ImagePath
             };
         }
 
+        // Delete a game by ID
         public async Task<bool> DeleteGameAsync(int id)
         {
             var game = await _context.Games.FindAsync(id);
@@ -51,6 +54,7 @@ namespace GameShop.Services
             return true;
         }
 
+        // Get all games with stickers
         public async Task<IEnumerable<GameDto>> GetAllGamesAsync()
         {
             return await _context.Games
@@ -60,17 +64,18 @@ namespace GameShop.Services
                     GameId = g.GameId,
                     Title = g.Title,
                     Genre = g.Genre,
-                    ImagePath = g.ImagePath, // <-- include image path
+                    ImagePath = g.ImagePath, // image path
                     Stickers = g.Stickers.Select(s => new StickerDto
                     {
                         StickerId = s.StickerId,
                         Name = s.Name,
-                        // other needed properties
+
                     }).ToList()
                 })
                 .ToListAsync();
         }
 
+        // Get a single game by ID
         public async Task<GameDto?> GetGameByIdAsync(int id)
         {
             var game = await _context.Games
@@ -90,6 +95,7 @@ namespace GameShop.Services
             return game;
         }
 
+        // Update an existing game
         public async Task<bool> UpdateGameAsync(int id, GameCreateUpdateDto gameDto)
         {
             Console.WriteLine($"Updating game {id}, ImagePath: {gameDto.ImagePath}, Title: {gameDto.Title}, Genre: {gameDto.Genre}, Price: {gameDto.Price}, ReleaseDate: {gameDto.ReleaseDate}");

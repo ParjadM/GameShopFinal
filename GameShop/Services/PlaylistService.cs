@@ -8,25 +8,26 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-// The namespace should match your project structure
 namespace GameShop.Services
 {
     public class PlaylistService : IPlaylistService
     {
         private readonly ApplicationDbContext _context;
 
+        // Constructor - sets up database context
         public PlaylistService(ApplicationDbContext context)
         {
             _context = context;
         }
 
+        // Create a new playlist
         public async Task<PlaylistDto> CreatePlaylistAsync(PlaylistCreateUpdateDto playlistDto)
         {
             var playlist = new Playlist
             {
                 Name = playlistDto.Name,
                 Description = playlistDto.Description,
-                DateCreated = System.DateTime.UtcNow 
+                DateCreated = System.DateTime.UtcNow
             };
 
             _context.Playlists.Add(playlist);
@@ -34,12 +35,13 @@ namespace GameShop.Services
 
             return new PlaylistDto
             {
-                PlaylistId = playlist.PlaylistID, 
+                PlaylistId = playlist.PlaylistID,
                 Name = playlist.Name,
                 Description = playlist.Description
             };
         }
 
+        // Get a playlist by ID (with games)
         public async Task<PlaylistDto?> GetPlaylistByIdAsync(int playlistId)
         {
             var playlist = await _context.Playlists
@@ -48,7 +50,7 @@ namespace GameShop.Services
                 .Where(p => p.PlaylistID == playlistId)
                 .Select(p => new PlaylistDto
                 {
-                    PlaylistId = p.PlaylistID, 
+                    PlaylistId = p.PlaylistID,
                     Name = p.Name,
                     Description = p.Description,
                     Games = p.PlaylistGames.Select(pg => new GameDto
@@ -56,31 +58,33 @@ namespace GameShop.Services
                         GameId = pg.Game.GameId,
                         Title = pg.Game.Title,
                         Genre = pg.Game.Genre,
-                        Price = pg.Game.Price, 
-                        ReleaseDate = pg.Game.ReleaseDate, 
-                        ImageUrl = pg.Game.ImagePath 
+                        Price = pg.Game.Price,
+                        ReleaseDate = pg.Game.ReleaseDate,
+                        ImageUrl = pg.Game.ImagePath
                     }).ToList()
                 })
                 .FirstOrDefaultAsync();
 
             return playlist;
         }
-
+        
+        // Get all playlists (without games)
         public async Task<IEnumerable<PlaylistDto>> GetAllPlaylistsAsync()
         {
             var playlists = await _context.Playlists
                 .Select(p => new PlaylistDto
                 {
-                    PlaylistId = p.PlaylistID, 
+                    PlaylistId = p.PlaylistID,
                     Name = p.Name,
                     Description = p.Description,
-                    Games = new List<GameDto>() 
+                    Games = new List<GameDto>()
                 })
                 .ToListAsync();
 
             return playlists;
         }
 
+        // Update a playlist by ID
         public async Task<bool> UpdatePlaylistAsync(int playlistId, PlaylistCreateUpdateDto playlistDto)
         {
             var playlistToUpdate = await _context.Playlists.FindAsync(playlistId);
@@ -98,6 +102,7 @@ namespace GameShop.Services
             return true;
         }
 
+        // Delete a playlist by ID
         public async Task<bool> DeletePlaylistAsync(int playlistId)
         {
             var playlist = await _context.Playlists.FindAsync(playlistId);
@@ -111,6 +116,7 @@ namespace GameShop.Services
             return true;
         }
 
+        // Add a game to a playlist
         public async Task<bool> AddGameToPlaylistAsync(int playlistId, int gameId)
         {
             var playlistExists = await _context.Playlists.AnyAsync(p => p.PlaylistID == playlistId);
@@ -121,6 +127,7 @@ namespace GameShop.Services
                 return false;
             }
 
+            // Check if association already exists
             var associationExists = await _context.PlaylistGames
                 .AnyAsync(pg => pg.PlaylistId == playlistId && pg.GameId == gameId);
 
@@ -139,7 +146,8 @@ namespace GameShop.Services
             await _context.SaveChangesAsync();
             return true;
         }
-
+        
+        // Remove a game from a playlist
         public async Task<bool> RemoveGameFromPlaylistAsync(int playlistId, int gameId)
         {
             var playlistGame = await _context.PlaylistGames

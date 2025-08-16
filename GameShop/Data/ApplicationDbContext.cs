@@ -12,7 +12,7 @@ namespace GameShop.Data
         {
         }
 
-        // Your app's entities
+        // App's entities
         public DbSet<Game> Games { get; set; }
         public DbSet<Playlist> Playlists { get; set; }
         public DbSet<PlaylistGame> PlaylistGames { get; set; }
@@ -51,7 +51,7 @@ namespace GameShop.Data
                 .HasForeignKey(s => s.GameId)
                 .OnDelete(DeleteBehavior.Cascade);
 
-            // Add precision for decimal properties
+            // Precision for decimal properties
             modelBuilder.Entity<Game>()
                 .Property(g => g.Price)
                 .HasPrecision(18, 2);

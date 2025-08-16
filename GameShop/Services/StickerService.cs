@@ -11,11 +11,13 @@ namespace GameShop.Services
     {
         private readonly ApplicationDbContext _context;
 
+        // Constructor - sets up database context
         public StickerService(ApplicationDbContext context)
         {
             _context = context;
         }
 
+        // Create a new sticker
         public async Task<StickerDto> CreateAsync(StickerCreateUpdateDto dto)
         {
             var sticker = new Sticker
@@ -41,6 +43,7 @@ namespace GameShop.Services
             };
         }
 
+        // Get all stickers
         public async Task<IEnumerable<StickerDto>> GetAllAsync()
         {
             return await _context.Stickers
@@ -56,6 +59,7 @@ namespace GameShop.Services
                 }).ToListAsync();
         }
 
+        // Get a sticker by ID
         public async Task<StickerDto?> GetByIdAsync(int stickerId)
         {
             var s = await _context.Stickers
@@ -76,6 +80,7 @@ namespace GameShop.Services
             };
         }
 
+        // Get all stickers for a specific game
         public async Task<IEnumerable<StickerDto>> GetByGameIdAsync(int gameId)
         {
             return await _context.Stickers
@@ -92,6 +97,7 @@ namespace GameShop.Services
                 }).ToListAsync();
         }
 
+        // Update a sticker
         public async Task<bool> UpdateAsync(int stickerId, StickerCreateUpdateDto dto)
         {
             var sticker = await _context.Stickers.FindAsync(stickerId);
@@ -106,7 +112,8 @@ namespace GameShop.Services
             await _context.SaveChangesAsync();
             return true;
         }
-
+        
+        // Delete a sticker
         public async Task<bool> DeleteAsync(int stickerId)
         {
             var sticker = await _context.Stickers.FindAsync(stickerId);

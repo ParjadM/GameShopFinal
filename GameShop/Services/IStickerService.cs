@@ -4,6 +4,7 @@ namespace GameShop.Services
 {
     public interface IStickerService
     {
+        // CRUD for Stickers
         Task<StickerDto> CreateAsync(StickerCreateUpdateDto dto);
         Task<IEnumerable<StickerDto>> GetAllAsync();
         Task<StickerDto?> GetByIdAsync(int id);
