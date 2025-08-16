@@ -20,3 +20,6 @@
 
 ### fully tested
 * error handling were done to make sure everything works smoothly
+
+# Instructions
+* please sign up an account and then you can access the dashboard
