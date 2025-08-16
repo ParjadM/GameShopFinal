@@ -1,0 +1,35 @@
+﻿@model GameShop.DTO.PlaylistCreateUpdateDto
+
+@{
+    ViewData["Title"] = "Edit Playlist";
+}
+
+<link rel="stylesheet" href="~/css/addplaylist.css" />
+
+<h1>Edit Playlist</h1>
+
+<form asp-action="Edit" method="post">
+    @Html.AntiForgeryToken()
+    <div>
+        <label for="Name">Playlist Name</label>
+        <input asp-for="Name" id="Name" />
+        <span asp-validation-for="Name" class="text-danger"></span>
+    </div>
+
+    <div>
+        <label for="Description">Description (optional)</label>
+        <input asp-for="Description" id="Description" />
+        <span asp-validation-for="Description" class="text-danger"></span>
+    </div>
+
+    <div>
+        <button type="submit" class="add-btn">Update Playlist</button>
+        <a asp-controller="ManageCatalog" asp-action="Index" class="cancel-btn">Cancel</a>
+    </div>
+</form>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

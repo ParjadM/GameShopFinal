@@ -10,5 +10,6 @@ namespace GameShop.ViewModels
 
         // List of stickers to display/manage
         public IEnumerable<StickerDto> Stickers { get; set; } = new List<StickerDto>();
+        public IEnumerable<PlaylistDto> Playlists { get; set; } = new List<PlaylistDto>();
     }
 }

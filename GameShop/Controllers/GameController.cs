@@ -166,6 +166,7 @@ namespace GameShop.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> EditGame(int id, GameCreateUpdateDto gameDto, IFormFile imageFile)
         {
+<<<<<<< HEAD
             Console.WriteLine($"Received form data - GameId: {gameDto.GameId}, ImagePath: {gameDto.ImagePath}, Title: {gameDto.Title}, Genre: {gameDto.Genre}, Price: {gameDto.Price}, ReleaseDate: {gameDto.ReleaseDate}, ImageFile: {(imageFile != null ? imageFile.FileName : "null")}");
 
             
@@ -196,15 +197,20 @@ namespace GameShop.Controllers
 
                 return View(gameDto);
             }
+=======
+            if (id != gameDto.GameId)
+                return BadRequest();
+>>>>>>> 8c03f0b (Add Playlist management with games, update ManageCatalog, and style improvements)
 
             var existingGame = await _gameService.GetGameByIdAsync(id);
             if (existingGame == null)
-            {
-                Console.WriteLine($"Game not found for ID: {id}");
                 return NotFound();
-            }
 
-            Console.WriteLine($"Existing game ImagePath: {existingGame.ImagePath}");
+            if (!ModelState.IsValid)
+            {
+                gameDto.ImagePath = existingGame.ImagePath;
+                return View(gameDto);
+            }
 
             if (imageFile != null && imageFile.Length > 0)
             {
@@ -213,12 +219,10 @@ namespace GameShop.Controllers
                 {
                     string oldFilePath = Path.Combine(_webHostEnvironment.WebRootPath, existingGame.ImagePath.TrimStart('/'));
                     if (System.IO.File.Exists(oldFilePath))
-                    {
                         System.IO.File.Delete(oldFilePath);
-                        Console.WriteLine($"Deleted old image: {oldFilePath}");
-                    }
                 }
 
+                // Save new image
                 string uploadsFolder = Path.Combine(_webHostEnvironment.WebRootPath, "images/games");
                 Directory.CreateDirectory(uploadsFolder);
                 string uniqueFileName = Guid.NewGuid().ToString() + "_" + Path.GetFileName(imageFile.FileName);
@@ -230,24 +234,29 @@ namespace GameShop.Controllers
                 }
 
                 gameDto.ImagePath = "/images/games/" + uniqueFileName;
-                Console.WriteLine($"New image uploaded: {gameDto.ImagePath}");
+            }
+            else
+            {
+                // Preserve old image path from hidden field
+                gameDto.ImagePath = Request.Form["ExistingImagePath"];
             }
 
-            Console.WriteLine($"Final gameDto.ImagePath: {gameDto.ImagePath}");
             var updateResult = await _gameService.UpdateGameAsync(id, gameDto);
             if (!updateResult)
             {
+<<<<<<< HEAD
                 Console.WriteLine($"UpdateGameAsync failed for GameId: {id}");
                 
+=======
+>>>>>>> 8c03f0b (Add Playlist management with games, update ManageCatalog, and style improvements)
                 gameDto.ImagePath = existingGame.ImagePath;
-                Console.WriteLine($"Preserved ImagePath on update failure: {gameDto.ImagePath}");
                 return View(gameDto);
             }
 
-            Console.WriteLine("Game updated successfully, redirecting to ManageCatalog/Index");
             return RedirectToAction("Index", "ManageCatalog");
         }
 
+<<<<<<< HEAD
         /// <summary>
         /// Handles the HTTP POST request to permanently delete a specific game from the catalog.
         /// </summary>
@@ -259,6 +268,10 @@ namespace GameShop.Controllers
         /// <example>
         /// POST: /GameController/Delete/5
         /// </example>
+=======
+
+        // DELETE GAME - POST (for modal)
+>>>>>>> 8c03f0b (Add Playlist management with games, update ManageCatalog, and style improvements)
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Delete(int id)

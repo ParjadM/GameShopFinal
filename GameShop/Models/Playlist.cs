@@ -21,3 +21,5 @@ namespace GameShop.Models
         public ICollection<PlaylistGame> PlaylistGames { get; set; } = new List<PlaylistGame>();
     }
 }
+
+
